@@ -1,7 +1,15 @@
 {
-  "nodeModulesDir":"auto",
+  "nodeModulesDir": "auto",
   "tasks": {
-    "dev": "deno run --watch main.ts"
+    "dev": "deno run --watch src/main.ts",
+    "build": ""
+  },
+  "fmt": {
+    "useTabs": false,
+    "semiColons": true,
+    "bracePosition": "sameLine",
+    "singleQuote": true,
+    "useBraces": "preferNone"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
