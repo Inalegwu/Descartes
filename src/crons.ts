@@ -8,7 +8,7 @@ Deno.cron("fetch-and-process-news", "0 0 * * *", async () =>
 		console.log(`${data.summary} on ${data.fetchedAt}`);
 		if (data.articles.length === 0) return;
 		for (const article of data.articles) {
-			await kv.set([article.title], JSON.stringify(article));
+			await kv.set(["articles", article.title], JSON.stringify(article));
 		}
 	}),
 );
