@@ -1,11 +1,15 @@
 import { Effect, pipe } from "effect";
 import { runnable } from "./Cli.ts";
 
+const kv = await Deno.openKv();
+
 Deno.cron("fetch-and-process-news", "0 15 */3 * *", async () =>
-	pipe(await Effect.runPromise(runnable), (data) => {
+	pipe(await Effect.runPromise(runnable), async (data) => {
 		console.log(`${data.summary} on ${data.fetchedAt}`);
 		if (data.articles.length === 0) return;
-		// TODO: Save to supabase
+		for (const article of data.articles) {
+			await kv.set([article.title], JSON.stringify(article));
+		}
 	}),
 );
 
