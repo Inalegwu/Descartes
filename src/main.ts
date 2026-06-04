@@ -1,14 +1,3 @@
-import { Effect, pipe } from "effect";
-import { runnable } from "./Cli.ts";
+import "./crons.ts";
 
-Deno.cron("fetch-and-process-news", "0 15 */3 * *", async () =>
-	pipe(await Effect.runPromise(runnable), (data) => {
-		console.log(`Successfully processed ${data.articles.length} articles`);
-		if (data.articles.length === 0) return;
-	}),
-);
-
-// TODO: cron to reach out to AI model to write out case study following our format
-
-// TODO: cron to take this outputted case study and write it to a markdown
-// TODO: file in the github repo and trigger a redeploy on vercel
+Deno.serve((req) => new Response("Hello world"));
