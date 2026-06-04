@@ -12,4 +12,4 @@ Deno.cron("fetch-and-process-news", "0 15 */3 * *", async () =>
 // TODO: cron to reach out to AI model to write out case study following our format
 // TODO: take this outputted case study and write it to a markdown
 // TODO: file in the github repo and trigger a redeploy on vercel
-Deno.cron("generate-case-studies", "", async () => {});
+// Deno.cron("generate-case-studies", "", async () => {});
