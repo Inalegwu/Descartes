@@ -1,6 +1,7 @@
 import { Array, Effect, pipe } from 'effect';
 import { FetchHttpClient } from 'effect/unstable/http';
 import * as Constants from './constants.ts';
+import * as Types from './types.ts';
 import { NewsItem, type SourceConfig } from './types.ts';
 import * as Utils from './utils.ts';
 
@@ -33,9 +34,12 @@ const fetchSource = (source: SourceConfig) =>
               publishedAt: a.publishedAt ?? a.date ?? new Date().toISOString(),
               description: Utils.stripHtml(a.description ?? a.summary ?? ''),
               source: source.name,
+              snippet: Utils.stripHtml(
+                a.description ?? a.summary ?? '',
+              ).substring(0, 200),
             });
           })
-          // @ts-expect-error
+          // @ts-expect-error: something something
           .filter((x): x is NewsItem => x !== null)
           .filter(Utils.isRelevant) as NewsItem[]
       );
@@ -64,17 +68,18 @@ export const program = Effect.gen(function* () {
   const output = {
     summary: `${items.length} relevant articles found`,
     fetchedAt: new Date().toISOString(),
-    articles: items.map((item) => ({
-      title: item.title,
-      source: item.source,
-      published: item.publishedAt,
-      url: item.url,
-      snippet: item.description.substring(0, 200),
-    })),
+    articles: items.map(
+      (item) =>
+        new Types.NewsItem({
+          title: item.title,
+          source: item.source,
+          publishedAt: item.publishedAt,
+          url: item.url,
+          snippet: item.description.substring(0, 200),
+          description: item.description,
+        }),
+    ),
   };
-  // yield* Effect.log(JSON.stringify(output, null, 2));
-
-  // yield* Effect.logInfo(JSON.stringify(output.articles.map((art) => art.url)));
 
   return output;
 });

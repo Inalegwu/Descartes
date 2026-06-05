@@ -6,6 +6,7 @@ export class NewsItem extends Schema.Class<NewsItem>('NewsItem')({
   publishedAt: Schema.String,
   description: Schema.String,
   source: Schema.String,
+  snippet: Schema.String,
 }) {}
 
 export interface SourceConfig {

@@ -13,9 +13,10 @@ app.get('/all', async (ctx) => {
   const allArticles: T.NewsItem[] = [];
 
   for await (const article of content) {
-    const parsedArticle = Schema.decodeSync(T.NewsItem)(
-      JSON.parse(article.value as string),
-    );
+    const parsedArticle = Schema.decodeSync(T.NewsItem, {
+      onExcessProperty: 'ignore',
+      concurrency: 2,
+    })(JSON.parse(article.value as string));
     allArticles.push(parsedArticle);
   }
 

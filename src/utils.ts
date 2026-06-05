@@ -48,6 +48,7 @@ export const rssItemToNewsItem = (
     publishedAt,
     description,
     source,
+    snippet: description.substring(0, 200),
   });
 };
 
