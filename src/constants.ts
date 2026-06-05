@@ -1,36 +1,36 @@
-import type { SourceConfig } from './types.ts';
+import { SourceConfig } from './types.ts';
 
 export const SOURCES: SourceConfig[] = [
-  {
+  new SourceConfig({
     name: 'How we made it in Africa',
     type: 'rss',
     url: 'https://www.howwemadeitinafrica.com/feed/',
-  },
-  {
+  }),
+  new SourceConfig({
     name: 'Disrupt Africa',
     type: 'rss',
     url: 'https://disruptafrica.com/feed/',
-  },
-  {
+  }),
+  new SourceConfig({
     name: 'Africa.com',
     type: 'rss',
     url: 'https://www.africa.com/latest-news/feed/',
-  },
-  {
+  }),
+  new SourceConfig({
     name: 'AllAfrica Business',
     type: 'rss',
     url: 'https://allafrica.com/business/',
-  },
-  {
+  }),
+  new SourceConfig({
     name: 'Standard Media Kenya Business',
     type: 'rss',
     url: 'https://www.standardmedia.co.ke/rss/business.php',
-  },
-  {
+  }),
+  new SourceConfig({
     name: 'African Development Bank',
     type: 'rss',
     url: 'https://www.afdb.org/en/news-and-events/rss',
-  },
+  }),
 ];
 
 export const FINANCING_KEYWORDS = [
