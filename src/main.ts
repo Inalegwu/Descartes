@@ -1,6 +1,6 @@
-import './crons.ts';
 import { Schema } from 'effect';
 import { Hono } from 'hono';
+import './crons.ts';
 import * as T from './types.ts';
 
 const kv = await Deno.openKv();
@@ -24,5 +24,24 @@ app.get('/all', async (ctx) => {
     data: allArticles,
   });
 });
+
+app.get('/tags', (ctx) => {
+  const url = ctx.req.query('url');
+
+  if (!url) {
+    ctx.json({
+      message: 'No URL provided for tagging',
+    });
+  }
+
+  return ctx.json({
+    message: 'success',
+  });
+});
+
+app.get('/', (c) =>
+  c.json({
+    message: 'Hello World',
+  }));
 
 Deno.serve(app.fetch);
