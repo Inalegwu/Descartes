@@ -1,5 +1,6 @@
-import { Effect, pipe } from 'effect';
+import { Effect, pipe, Schema } from 'effect';
 import { runnable } from './Cli.ts';
+import * as T from './types.ts';
 
 const kv = await Deno.openKv();
 
@@ -10,8 +11,18 @@ Deno.cron(
     pipe(await Effect.runPromise(runnable), async (data) => {
       console.log(`${data.summary} on ${data.fetchedAt}`);
       if (data.articles.length === 0) return;
-      for (const article of data.articles)
-        await kv.set(['articles', article.title], JSON.stringify(article));
+
+      const allArticles = kv.list({ prefix: ['articles'] });
+
+      for (const article of data.articles) {
+        for await (const saved of allArticles) {
+          const parsed = Schema.decodeUnknownSync(T.NewsItem, {
+            onExcessProperty: 'ignore',
+          })(JSON.parse(saved.value as string));
+          if (parsed.title === article.title) return;
+          await kv.set(['articles', article.title], JSON.stringify(article));
+        }
+      }
     }),
 );
 

@@ -1,0 +1,13 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll.ts": "always",
+		"source.addMissingImports.ts": "always",
+		"source.sortImports": "always",
+		"source.removeUnused.ts": "always",
+		"source.removeUnusedImports": "always",
+		"source.organizeImports": "always"
+	},
+	"[typescript][typescriptreact][javascript][javascriptreact]": {
+		"editor.defaultFormatter": "denoland.vscode-deno"
+	}
+}
