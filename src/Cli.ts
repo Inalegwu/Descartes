@@ -60,7 +60,7 @@ const fetchAllSources = () =>
     ),
   );
 
-export const program = Effect.gen(function* () {
+const program = Effect.gen(function* () {
   yield* Effect.log(
     'Searching for recent non‑debt SME investments in Africa...',
   );

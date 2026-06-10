@@ -2,6 +2,11 @@ import { SourceConfig } from './types.ts';
 
 export const SOURCES: SourceConfig[] = [
   new SourceConfig({
+    name:"TCS Success Stories",
+    type:"rss",
+    url:"https://www.deleguescommerciaux.gc.ca/en/about-us/success-stories/?feed=rss2"
+  }),
+  new SourceConfig({
     name: 'How we made it in Africa',
     type: 'rss',
     url: 'https://www.howwemadeitinafrica.com/feed/',
@@ -31,6 +36,14 @@ export const SOURCES: SourceConfig[] = [
     type: 'rss',
     url: 'https://www.afdb.org/en/news-and-events/rss',
   }),
+];
+
+
+export const CANADA_KEYWORDS = [
+  "canada", "canadian", "toronto", "vancouver", "montreal",
+  "calgary", "ottawa", "british columbia", "quebec", "alberta",
+  "canadian company", "canadian investor", "canadian-led",
+  "trade commissioner service", "canada's", "canadian venture",
 ];
 
 export const FINANCING_KEYWORDS = [

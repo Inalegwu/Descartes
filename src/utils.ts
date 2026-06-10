@@ -55,21 +55,23 @@ export const rssItemToNewsItem = (
 export const isRelevant = (item: NewsItem): boolean => {
   const text = toLowerCase(`${item.title} ${item.description}`);
 
-  // 1. Must mention Africa
   const hasAfrica = Constants.AFRICA_KEYWORDS.some((kw) => text.includes(kw));
   if (!hasAfrica) return false;
 
-  // 2. Must mention an SME context
   const hasSME = Constants.SME_KEYWORDS.some((kw) => text.includes(kw));
   if (!hasSME) return false;
 
-  // 3. Must indicate non‑debt funding
   const hasFunding = Constants.FINANCING_KEYWORDS.some((kw) =>
     text.includes(kw)
   );
   if (!hasFunding) return false;
 
-  // 4. Should not be dominated by debt language (optional, reject if >2 debt keywords)
+  const isFromCanada = Constants.CANADA_KEYWORDS.some((kw) =>
+    text.includes(kw)
+  );
+
+  if (!isFromCanada) return false;
+
   const debtHits =
     Constants.DEBT_EXCLUDE.filter((kw) => text.includes(kw)).length;
   if (debtHits >= 2) return false;
