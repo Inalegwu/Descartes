@@ -20,6 +20,7 @@ Deno.cron(
             onExcessProperty: 'ignore',
           })(JSON.parse(saved.value as string));
           if (parsed.title === article.title) return;
+          console.log(`Saving ${article.title} => ${article.url}`);
           await kv.set(['articles', article.title], JSON.stringify(article));
         }
       }
