@@ -66,12 +66,6 @@ export const isRelevant = (item: NewsItem): boolean => {
   );
   if (!hasFunding) return false;
 
-  const isFromCanada = Constants.CANADA_KEYWORDS.some((kw) =>
-    text.includes(kw)
-  );
-
-  if (!isFromCanada) return false;
-
   const debtHits =
     Constants.DEBT_EXCLUDE.filter((kw) => text.includes(kw)).length;
   if (debtHits >= 2) return false;
