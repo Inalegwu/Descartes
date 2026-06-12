@@ -7,6 +7,20 @@ const kv = await Deno.openKv();
 
 const app = new Hono();
 
+app.use('*', async (c, next) => {
+  c.setRenderer((content) => {
+    return c.html(
+      `<html>
+    <head>
+    <title></title>
+    </head>
+    <body>${content}</body>
+    </html>`,
+    );
+  });
+  await next();
+});
+
 app.get('/all', async (ctx) => {
   const content = kv.list({ prefix: ['articles'] });
 
@@ -23,6 +37,32 @@ app.get('/all', async (ctx) => {
   return ctx.json({
     data: allArticles,
   });
+});
+
+app.get('/see', async (ctx) => {
+  const content = kv.list({ prefix: ['articles'] });
+
+  const allArticles: T.NewsItem[] = [];
+
+  for await (const article of content) {
+    const parsedArticle = Schema.decodeSync(T.NewsItem, {
+      onExcessProperty: 'ignore',
+      concurrency: 2,
+    })(JSON.parse(article.value as string));
+    allArticles.push(parsedArticle);
+  }
+
+  return ctx.render(`
+    ${
+    allArticles.map((art) => (
+      `<p>${art.title}</p>
+        <p>${art.description}</p>
+        <p>${art.snippet}</p>
+        <p>${art.url}</p>
+      `
+    ))
+  }  
+  `);
 });
 
 app.get('/tags', (ctx) => {
